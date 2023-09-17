@@ -5,7 +5,6 @@ import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
 
-import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -30,22 +29,28 @@ public class UI {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
-    public static void clearScreen(){
+    public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    public static ChessPosition readChessPosition(Scanner sc){
+    public static ChessPosition readChessPosition(Scanner sc) {
         try {
             String s = sc.nextLine();
             char column = s.charAt(0);
             int row = Integer.parseInt(s.substring(1));
             return new ChessPosition(column, row);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             throw new InputMismatchException("Erro lendo posição do xadrez, valores validos de a1 ate h8");
         }
 
+    }
+
+    public static void printMatch(ChessMatch chessMatch) {
+        printBoard(chessMatch.getPieces());
+        System.out.println();
+        System.out.println("Turno : " + chessMatch.getTurn());
+        System.out.println("Esperando Jogador: " + chessMatch.getCurrentPlayer());
     }
 
     public static void printBoard(ChessPiece[][] pieces) {
@@ -57,24 +62,20 @@ public class UI {
             }
             System.out.println();
         }
-        System.out.println("  a b c d e f g h");
+        System.out.println(" a b c d e f g h");
     }
 
 
-
-
     private static void printPiece(ChessPiece piece, boolean background) {
-        if (background){
+        if (background) {
             System.out.print(ANSI_BLUE_BACKGROUND);
         }
         if (piece == null) {
             System.out.print("-" + ANSI_RESET);
-        }
-        else {
+        } else {
             if (piece.getColor() == Color.WHITE) {
                 System.out.print(ANSI_WHITE + piece + ANSI_RESET);
-            }
-            else {
+            } else {
                 System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
             }
         }
