@@ -33,4 +33,6 @@ public abstract class Piece {
 
     }
 
+    public void add(Piece capturedPiece) {
+    }
 }
