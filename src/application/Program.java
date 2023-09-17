@@ -1,6 +1,5 @@
 package application;
 
-import java.util.*;
 import boardgame.Board;
 import boardgame.Position;
 import chess.ChessException;
@@ -9,7 +8,6 @@ import chess.ChessPiece;
 import chess.ChessPosition;
 
 import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -19,13 +17,12 @@ public class Program {
 
     public static void main(String[] args) {
 
-        Locale locale = new Locale("UTF-8");
+
 
         ChessMatch chessMatch = new ChessMatch();
         Scanner sc = new Scanner(System.in);
         while (true) {
             try {
-
 
                 UI.clearScreen();
                 UI.printBoard(chessMatch.getPieces());
@@ -33,9 +30,16 @@ public class Program {
                 System.out.print("Source: ");
                 ChessPosition source = UI.readChessPosition(sc);
 
+
+
+                boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+                UI.clearScreen();
+                UI.printBoard(chessMatch.getPieces(), possibleMoves);
+
                 System.out.println();
                 System.out.print("Target: ");
                 ChessPosition target = UI.readChessPosition(sc);
+
 
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
             }
